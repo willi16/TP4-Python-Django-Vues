@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste des matières</title>
+</head>
+<body>
+    <h1>Liste des matières</h1>
+    {% if lesMatieres %}
+        <ul>
+        {% for matieres in lesMatieres %}
+            <li><a href="{% url 'notes:matiere' matiere_id=matieres.id %}">{{ matieres.nom }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune matière trouvée.</p>
+    {% endif %}
+</body>
+</html>

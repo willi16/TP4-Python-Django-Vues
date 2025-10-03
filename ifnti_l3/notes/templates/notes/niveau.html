@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Détails sur un niveau</title>
+</head>
+<body>
+    <h1>Détails du niveau</h1>
+    {% if unniveau %}
+        <div class="info"><strong>ID :</strong> {{ unniveau.id }}</div>
+        <div class="info"><strong>Nom_Niveau :</strong> {{ unniveau.nom }}</div>
+        
+    {% else %}
+        <p>Niveau non trouvé.</p>
+    {% endif %}
+    <br>
+    <a href="{% url 'notes:index' %}">Retour à l'accueil</a>
+</body>
+</html>

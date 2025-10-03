@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Détails matière</title>
+   
+</head>
+<body>
+    <h1>Détails de la matière</h1>
+    {% if uneMatiere %}
+        <div class="info"><strong>ID :</strong> {{ uneMatiere.id }}</div>
+        <div class="info"><strong>Nom_Matiere :</strong> {{ uneMatiere.nom }}</div>
+        <div class="info"><strong>Enseignant :</strong> {{ uneMatiere.enseignant }}</div>
+
+        <div class="info">
+            <strong>Niveaux :</strong>
+            {% if uneMatiere.niveaux.all %}
+                {% for niveau in uneMatiere.niveaux.all %}
+                    {{ niveau }}
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            {% else %}
+                Aucun niveau associé
+            {% endif %}
+        </div>
+    {% else %}
+        <p> Matière non trouvée.</p>
+    {% endif %}
+    <br>
+    <a href="{% url 'notes:matieres' %}">Retour à la liste</a>
+</body>
+</html>

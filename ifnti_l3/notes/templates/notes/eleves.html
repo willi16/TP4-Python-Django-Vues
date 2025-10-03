@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste des élèves</title>
+</head>
+<body>
+    <h1>Liste des élèves</h1>
+    {% if lesEleves %}
+        <ul>
+            {% for eleves in lesEleves %}
+                <li>
+                    <a href="{% url 'notes:eleve' eleve_id=eleves.id %}"><strong>{{ eleves.nom }}</strong></a>
+                    {% if eleves.prenom %}
+                        ({{ eleves.prenom }})
+                    {% endif %}
+                    {% if eleves.date_naissance %}
+                        - Né(e) le {{ eleves.date_naissance }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun élève trouvé.</p>
+    {% endif %}
+    <a href="{% url 'notes:index' %}">Retour à l'accueil</a>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Détails élève</title>
+</head>
+<body>
+    <h1>Détails de l'élève</h1>
+    {% if uneleve %}
+        <div class="info"><strong>ID :</strong> {{ uneleve.id }}</div>
+        <div class="info"><strong>Nom :</strong> {{ uneleve.nom }}</div>
+        <div class="info"><strong>Prénom :</strong> {{ uneleve.prenom}}</div>
+        <div class="info"><strong>Date de naissance :</strong> {{ uneleve.date_naissance|date:"d/m/Y" }}</div>
+        <div class="info"><strong>Sexe :</strong> {{ uneleve.sexe}}</div>
+        <div class="info"><strong>Niveau :</strong> {{ uneleve.niveau}}</div>
+    {% else %}
+        <p>Élève non trouvé.</p>
+    {% endif %}
+    <br>
+    <a href="{% url 'notes:eleves' %}">Retour à la liste</a>
+</body>
+</html>
