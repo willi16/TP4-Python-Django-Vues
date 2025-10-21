@@ -15,17 +15,11 @@ class Matiere(models.Model):
     )
     niveaux = models.ManyToManyField(
         'Niveau',
-        
         null=True,
         blank=True,
         related_name='matieres'
     )
-    eleves = models.ManyToManyField(
-        'Eleve',
-        related_name='matieres_suivies',
-        verbose_name="Élèves inscrits",
-        blank=True
-    )
+    
 
     class Meta:
         verbose_name = "Matière"

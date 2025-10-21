@@ -1,11 +1,17 @@
 from django.db import models
 from .eleve import Eleve
 from .matiere import Matiere
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Note(models.Model):
     eleve = models.ForeignKey('Eleve', on_delete=models.CASCADE, related_name='notes')
     matiere = models.ForeignKey('Matiere', on_delete=models.CASCADE, related_name='notes')
-    valeur = models.DecimalField('Note', max_digits=5, decimal_places=2,null=True,blank=True)
+    valeur = models.FloatField(
+        validators=[
+            MinValueValidator(0.0, message="La note ne peut pas être inférieure à 0."),
+            MaxValueValidator(20.0, message="La note ne peut pas être supérieure à 20.")
+        ]
+    )
     date = models.DateField("Date", auto_now_add=True)
       
 
@@ -15,7 +21,7 @@ class Note(models.Model):
     class Meta:
         verbose_name = "Note"
         verbose_name_plural = "Notes"
-        unique_together = ('eleve', 'matiere','date')
+        # unique_together = ('eleve', 'matiere','date')
         
  
         

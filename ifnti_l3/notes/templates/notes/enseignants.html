@@ -1,24 +1,26 @@
 {% comment %} <!DOCTYPE html>
 <html>
   <head>
-    <title>Liste des matières</title>
+    <title>Liste des enseignants</title>
   </head>
   <body>
-    <h1>Liste des matières</h1>
-    {% if lesMatieres %}
+    <h1>Liste des enseignants</h1>
+    {% if enseignants %}
     <ul>
-      {% for matieres in lesMatieres %}
+      {% for enseignant in enseignants %}
       <li>
-        <a href="{% url 'notes:matiere' matiere_id=matieres.id %}"
-          >{{ matieres.nom }}</a
-        >
+        <strong>
+          <a href="{% url 'notes:enseignant' enseignant_id=enseignant.id %}">
+            {{ enseignant.nom }}
+          </a>
+        </strong>
+        {% if enseignant.prenom %} {{ enseignant.prenom }} {% endif %}
       </li>
       {% endfor %}
     </ul>
     {% else %}
-    <p>Aucune matière trouvée.</p>
+    <p>Aucun enseignant trouvé.</p>
     {% endif %}
-    <br />
     <a href="{% url 'notes:index' %}">Retour à l'accueil</a>
   </body>
 </html> {% endcomment %}
@@ -26,7 +28,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Liste des matières</title>
+    <title>Liste des enseignants</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -95,23 +97,25 @@
 </head>
 <body>
     <div class="container">
-        <h1>Liste des matières</h1>
+        <h1>Liste des enseignants</h1>
 
-        {% if lesMatieres %}
+        {% if enseignants %}
             <table>
                 <thead>
                     <tr>
-                        <th>Nom de la matière</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for matiere in lesMatieres %}
+                    {% for enseignant in enseignants %}
                         <tr>
-                            <td>{{ matiere.nom }}</td>
+                            <td><strong>{{ enseignant.nom }}</strong></td>
+                            <td>{{ enseignant.prenom|default:"—" }}</td>
                             <td>
-                                <a href="{% url 'notes:matiere' matiere_id=matiere.id %}">
-                                    Voir les détails
+                                <a href="{% url 'notes:enseignant' enseignant_id=enseignant.id %}">
+                                    Voir le détail
                                 </a>
                             </td>
                         </tr>
@@ -119,7 +123,7 @@
                 </tbody>
             </table>
         {% else %}
-            <p class="no-data">Aucune matière trouvée.</p>
+            <p class="no-data">Aucun enseignant trouvé.</p>
         {% endif %}
 
         <a href="{% url 'notes:index' %}" class="back-link"> Retour à l'accueil</a>

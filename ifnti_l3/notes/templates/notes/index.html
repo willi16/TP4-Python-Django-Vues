@@ -1,22 +1,114 @@
-<!DOCTYPE html>
+{% comment %} <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Bonjour tout le monde !</h1>
-     <div class="menu">
-        <ul>
-            <li>
-                <a href="{% url 'notes:eleves' %}">Liste des élèves</a>
-                
-            </li>
-            <li>
-                <a href="{% url 'notes:matieres' %}">Liste des matières</a>
-            </li>
-        </ul>
+    <div class="menu">
+      <ul>
+        <li>
+          <a href="{% url 'notes:eleves' %}">Liste des élèves</a>
+        </li>
+        <li>
+          <a href="{% url 'notes:matieres' %}">Liste des matières</a>
+        </li>
+        <li>
+          <a href="{% url 'notes:enseignants' %}">Liste des enseignants</a>
+        </li>
+      </ul>
     </div>
-</body>
+  </body>
+</html>
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gestion Scolaire</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        color: #0056b3;
+        text-align: center;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .stats {
+        text-align: center;
+        margin: 30px 0;
+      }
+      .stat {
+        display: inline-block;
+        margin: 0 15px;
+        font-size: 1.2em;
+      }
+      .stat strong {
+        color: #0056b3;
+      }
+      .actions {
+        text-align: center;
+        margin: 30px 0;
+      }
+      .actions a {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px 20px;
+        background-color: #0056b3;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      .actions a:hover {
+        background-color: #003d82;
+      }
+      footer {
+        text-align: center;
+        margin-top: 40px;
+        color: #666;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Gestion École</h1>
+
+      <div class="stats">
+        <div class="stat">Élèves : <strong>{{ nb_eleves }}</strong></div>
+        <div class="stat">Matières : <strong>{{ nb_matieres }}</strong></div>
+        <div class="stat">
+          Enseignants : <strong>{{ nb_enseignants }}</strong>
+        </div>
+      </div>
+
+      <div class="actions">
+        <h2>Accès rapide</h2>
+        <a href="{% url 'notes:eleves' %}">Liste des élèves</a>
+        <a href="{% url 'notes:matieres' %}">Liste des matières</a>
+        <a href="{% url 'notes:enseignants' %}">Liste des enseignants</a>
+        <a href="{% url 'notes:add_eleve' %}">Ajouter un élève</a>
+        <a href="{% url 'notes:add_enseignant' %}">Ajouter un enseignant</a>
+
+      </div>
+    </div>
+
+    <footer>&copy; 2025 - Système de gestion d'école</footer>
+  </body>
 </html>

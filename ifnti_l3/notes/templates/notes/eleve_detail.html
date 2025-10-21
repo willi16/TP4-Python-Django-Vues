@@ -1,21 +1,201 @@
-<!DOCTYPE html>
+{% comment %} <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Détails élève</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Détails de l'élève</h1>
     {% if uneleve %}
-        <div class="info"><strong>ID :</strong> {{ uneleve.id }}</div>
-        <div class="info"><strong>Nom :</strong> {{ uneleve.nom }}</div>
-        <div class="info"><strong>Prénom :</strong> {{ uneleve.prenom}}</div>
-        <div class="info"><strong>Date de naissance :</strong> {{ uneleve.date_naissance|date:"d/m/Y" }}</div>
-        <div class="info"><strong>Sexe :</strong> {{ uneleve.sexe}}</div>
-        <div class="info"><strong>Niveau :</strong> {{ uneleve.niveau}}</div>
+    <div class="info"><strong>ID :</strong> {{ uneleve.id }}</div>
+    <div class="info"><strong>Nom :</strong> {{ uneleve.nom }}</div>
+    <div class="info"><strong>Prénom :</strong> {{ uneleve.prenom}}</div>
+    <div class="info">
+      <strong>Date de naissance :</strong> {{
+      uneleve.date_naissance|date:"d/m/Y" }}
+    </div>
+    <div class="info"><strong>Sexe :</strong> {{ uneleve.sexe}}</div>
+    <div class="info"><strong>Niveau :</strong> {{ uneleve.niveau}}</div>
     {% else %}
-        <p>Élève non trouvé.</p>
+    <p>Élève non trouvé.</p>
     {% endif %}
-    <br>
+    <br />
+
+    <h2>Matières suivies :</h2>
+
+    <ul>
+      {% for matieres in matiereSuivie %}
+      <li>
+        {{ matieres.nom }}
+        <br />
+        <a href="{% url 'notes:add_note' uneleve.id matieres.id %}"
+          >Ajouter une note</a
+        >
+        <br />
+        <br />
+      </li>
+
+      {% endfor %}
+    </ul>
+    <br />
+    <a href="{% url 'notes:update_eleve' eleve_id=uneleve.id %}"
+      >Modifier cet élève</a
+    >
+    <br />
     <a href="{% url 'notes:eleves' %}">Retour à la liste</a>
-</body>
+  </body>
+</html>
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Détails de l'élève</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #0056b3;
+        text-align: center;
+        border-bottom: 2px solid #0056b3;
+        padding-bottom: 10px;
+      }
+      h2 {
+        color: #0056b3;
+        border-left: 4px solid #0056b3;
+        padding-left: 10px;
+        margin-top: 30px;
+      }
+      .info {
+        margin-bottom: 10px;
+        font-size: 1.1em;
+      }
+      .info strong {
+        color: #0056b3;
+        width: 180px;
+        display: inline-block;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        color: #333;
+      }
+      tr:hover {
+        background-color: #f9f9f9;
+      }
+      a {
+        color: #0056b3;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .actions {
+        margin-top: 30px;
+        text-align: center;
+      }
+      .actions a {
+        display: inline-block;
+        margin: 0 10px;
+        padding: 10px 20px;
+        background-color: #0056b3;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      .actions a:hover {
+        background-color: #003d82;
+      }
+      .no-data {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        padding: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Détails de l'élève</h1>
+
+      {% if uneleve %}
+      <div class="info"><strong>ID :</strong> {{ uneleve.id }}</div>
+      <div class="info"><strong>Nom :</strong> {{ uneleve.nom }}</div>
+      <div class="info">
+        <strong>Prénom :</strong> {{ uneleve.prenom|default:"—" }}
+      </div>
+      <div class="info">
+        <strong>Date de naissance :</strong> {{uneleve.date_naissance|date:"d/m/Y"|default:"—" }}
+      </div>
+      <div class="info">
+        <strong>Sexe :</strong> {{ uneleve.sexe|default:"—" }}
+      </div>
+      <div class="info">
+        <strong>Niveau :</strong> {{ uneleve.niveau|default:"—" }}
+      </div>
+      {% else %}
+      <p class="no-data">Élève non trouvé.</p>
+      {% endif %}
+
+      <h2>Matières suivies</h2>
+
+      {% if matiereSuivie %}
+      <table>
+        <thead>
+          <tr>
+            <th>Matière</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for matiere in matiereSuivie %}
+          <tr>
+            <td>{{ matiere.nom }}</td>
+            <td>
+              <a href="{% url 'notes:add_note' uneleve.id matiere.id %}">
+                Ajouter une note
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="no-data">Cet élève ne suit aucune matière.</p>
+      {% endif %}
+
+      <div class="actions">
+        <a href="{% url 'notes:update_eleve' eleve_id=uneleve.id %}">
+          Modifier</a
+        >
+        <a href="{% url 'notes:eleves' %}"> Retour à la liste</a>
+      </div>
+    </div>
+  </body>
 </html>
