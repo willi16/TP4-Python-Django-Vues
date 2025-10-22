@@ -25,6 +25,10 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+#Ignorer tous les fichiers de migration
+*/migrations
+*/migrations/*.py
+*/migrations/*.pyc
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
