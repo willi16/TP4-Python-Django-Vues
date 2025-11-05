@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required,permission_required
 from notes.forms.EnseignantForm import EnseignantForm
 from notes.models import Enseignant
 
-
+@login_required
+@permission_required('notes.view_enseignant', raise_exception=True)
 def enseignants(request):
     listeEnseignants = Enseignant.objects.all()
     context = {'enseignants': listeEnseignants}
@@ -15,7 +17,8 @@ def unEnseignant(request, enseignant_id):
     context = {'unenseignant': unenseignant}
     return render(request,'notes/enseignant_detail.html',context)
 
-
+@login_required
+@permission_required('notes.add_enseignant', raise_exception=True)
 def add_enseignant(request):
     if request.method == "POST":
         form = EnseignantForm(request.POST)
@@ -26,7 +29,8 @@ def add_enseignant(request):
         form = EnseignantForm()
     return render(request, 'notes/add_enseignant.html', {'form': form})
 
-
+@login_required
+@permission_required('notes.change_enseignant', raise_exception=True)
 def update_enseignant(request, enseignant_id):
     enseignant = get_object_or_404(Enseignant, id=enseignant_id)
     if request.method == "POST":

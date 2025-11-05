@@ -1,0 +1,9 @@
+
+{% extends "admin/base.html" %}
+
+{% block submit_buttons_bottom %}
+    {{ block.super }}
+    <div class="extra-submit">
+        <input type="submit" value="Enregistrer et imprimer" name="_imprimer">
+    </div>
+{% endblock %}

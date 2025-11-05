@@ -1,4 +1,6 @@
-from django.http import HttpResponse,Http404
+from django.http import HttpResponse,Http404,HttpResponseForbidden
+from django.contrib.auth.decorators import login_required,permission_required
+
 from  django.shortcuts import render , get_object_or_404, redirect
 from notes.models import Eleve, Matiere, Note
 from notes.forms.Noteform import NoteForm
@@ -37,31 +39,41 @@ from notes.forms.Noteform import NoteForm
 #              return HttpResponse("ohhhhhhh")
 
 
-
+@login_required
+@permission_required('notes.add_note')
 def add_note(request, eleve_id, matiere_id):
     eleve = get_object_or_404(Eleve, id=eleve_id)
     matiere = get_object_or_404(Matiere, id=matiere_id)
 
     if matiere not in eleve.matieres_suivies.all():
         return HttpResponse("L'élève ne suit pas cette matière.")
+    
+    group_names = [group.name for group in request.user.groups.all()]
 
-    if request.method == "POST":
-        form = NoteForm(request.POST)
-        if form.is_valid():
-            note = form.save(commit=False)
-            note.eleve = eleve
-            note.matiere = matiere
-            note.save()
-            return redirect('notes:eleve', eleve_id=eleve.id)
-    else:
-        form = NoteForm()  
-    return render(request, 'notes/add_note.html', {
-        'eleve': eleve,
-        'matiere': matiere,
-        'form': form
-    })
+   
+    if 'enseignant' in group_names or 'directeur' in group_names:
+       
+        if request.method == "POST":
+            form = NoteForm(request.POST)
+            if form.is_valid():
+                note = form.save(commit=False)
+                note.eleve = eleve
+                note.matiere = matiere
+                note.save()
+                return redirect('notes:eleve', eleve_id=eleve.id)
+        else:
+            form = NoteForm()  
+        return render(request,'notes/add_note.html', {
+            'eleve': eleve,
+            'matiere': matiere,
+            'form': form
+        })
+
+    return HttpResponseForbidden("Vous n'avez pas la permission d'ajouter une note.")
 
 
+# @login_required
+# @permission_required('notes.add_note')
 def add_notes(request, matiere_id):
     matiere = get_object_or_404(Matiere, id=matiere_id)
     # eleves = matiere.matiere_eleve_set.all()

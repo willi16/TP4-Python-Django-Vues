@@ -100,7 +100,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>📝 Notes pour la matière : {{ matiere.nom }}</h1>
+        <h1>Notes pour la matière : {{ matiere.nom }}</h1>
 
         {% if formset %}
             <form method="post">
@@ -125,7 +125,7 @@
             <p class="no-students">Aucun élève inscrit dans cette matière.</p>
         {% endif %}
 
-        <a href="{% url 'notes:matiere' matiere.id %}" class="back-link">← Retour à la matière</a>
+        <a href="{% url 'notes:matiere' matiere.id %}" class="back-link">Retour à la matière</a>
     </div>
 </body>
 </html>

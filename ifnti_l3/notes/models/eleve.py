@@ -35,12 +35,7 @@ class Eleve(Personne):
             matieres_du_niveau = self.niveau.matieres.all()
                 
             self.matieres_suivies.set(matieres_du_niveau)
-            
-            # self.matieres_suivies.through.objects.bulk_create([
-            #     self.matieres_suivies.through(eleve_id=self.id, matiere_id=matiere.id)
-            #     for matiere in matieres_du_niveau
-            # ], ignore_conflicts=True)
-      
+                 
 
     def __str__(self):
         return f"{self.id} - {self.prenom} {self.nom}"

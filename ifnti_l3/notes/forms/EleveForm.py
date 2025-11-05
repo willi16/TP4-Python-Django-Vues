@@ -7,14 +7,15 @@ class EleveForm(forms.ModelForm):
     
     class Meta:
         model = Eleve
-        fields = ['nom', 'prenom', 'date_naissance','sexe', 'niveau','matieres_suivies']
+        fields = ['nom', 'prenom', 'date_naissance','sexe', 'niveau','matieres_suivies','user']
         labels = {
             'nom': 'Nom',
             'prenom': 'Prénom',
             'date_naissance': 'Date de naissance',
             'sexe': 'Sexe',
             'niveau': 'Niveau', 
-            'matieres_suivies' : 'Matieres_suivies'
+            'matieres_suivies' : 'Matieres_suivies',
+            'user' : 'Users'
         }
 
 

@@ -15,7 +15,7 @@ class Matiere(models.Model):
     )
     niveaux = models.ManyToManyField(
         'Niveau',
-        null=True,
+        # null=True,
         blank=True,
         related_name='matieres'
     )
