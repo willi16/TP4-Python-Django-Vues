@@ -20,6 +20,8 @@ from django.contrib.auth import views as auth_views
 from notes.views import index
 
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     

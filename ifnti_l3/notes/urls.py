@@ -39,9 +39,17 @@ urlpatterns = [
 
     path('enseignant/<int:enseignant_id>/update_enseignant', enseignant.update_enseignant, name='update_enseignant'),
 
+    # path('eleves/pdf/', eleve.generer_liste_tous_eleves_pdf, name='liste_tous_pdf'),
+    
+    # path('niveau/<int:niveau_id>/pdf/', eleve.liste_niveau_eleve, name='liste_niveau_pdf'),
 
+    path('pdf/', eleve.listEleves, name='pdf_demo'),
+    
+    path('pdf/niveau/<int:niveau_id>/', eleve.liste_niveauElv, name='liste_niveau'),
 
-
+    path('pdf/notes/matiere/<int:matiere_id>/', note.notesEleves, name='notes_eleves'),
+    
+    path('pdf/notes/synthese/', note.notesSynthese, name='notes_synthese'),
     # path('statistiques/',statistiquesViews.statistiques, name='stats')       
 ]
 
